@@ -8,7 +8,7 @@ We need to continue decomposing R2:
 {CE}+ = {ACE}
 R3 = {ACE}
 R4 = {BCE}
-The final decomposition is R1, R3 and R4
+The final decomposition is R1(B, D) key is D, R3(A, C, E) key is C, E and R4(B, C, E) key is B, C, E
 
 Part 3(b)
 S(A, B, C, D, E) with functional dependencies A->E, BC->A, DE->B
@@ -20,7 +20,7 @@ We need to continue decomposing R2:
 {BC}+ = {ABC}
 R3 = {ABC}
 R4 = {BCD}
-The final decomposition is R1, R3 and R4
+The final decomposition is R1(A, E) key is A, R3(A, B, C) key is B, C and R4(B, C, D) key is B, C, D
 
 Part 3(c)
 All attributes A, B, C and D are independent of each other

@@ -17,13 +17,13 @@ SELECT * FROM Frumble AS A, Frumble AS B
 WHERE A.name = B.name AND A.price != B.price;
 -- name -> price
 
--- SELECT * FROM Frumble AS A, Frumble AS B
--- WHERE A.name = B.name AND A.month != B.month;
--- -- name -x> month (functional dependency does not exist)
+SELECT * FROM Frumble AS A, Frumble AS B
+WHERE A.name = B.name AND A.month != B.month;
+-- name -x> month (functional dependency does not exist)
 
--- SELECT * FROM Frumble AS A, Frumble AS B
--- WHERE A.name = B.name AND A.discount != B.discount;
--- -- name -X> discount (functional dependency does not exist)
+SELECT * FROM Frumble AS A, Frumble AS B
+WHERE A.name = B.name AND A.discount != B.discount;
+-- name -X> discount (functional dependency does not exist)
 
 SELECT * FROM Frumble AS A, Frumble AS B
 WHERE A.month = B.month AND A.discount != B.discount;
@@ -50,7 +50,8 @@ R2 = {NDM}
 We need to continue decomposing R2:
 R3 = {DM}
 R4 = {NM}
-The final decomposition is R1, R3 and R4, i.e. {name, price}, {discount, month}, {name, month}
+The final decomposition is R1, R3 and R4, i.e. {name, price} key is name, 
+{discount, month} key is month, {name, month} key is name, month
 */
 
 CREATE TABLE namePrice (
@@ -66,6 +67,7 @@ CREATE TABLE discountMonth (
 CREATE TABLE nameMonth (
     name VARCHAR(256),
     month VARCHAR(256),
+    PRIMARY KEY (name, month),
     FOREIGN KEY (name) REFERENCES namePrice(name),
     FOREIGN KEY (month) REFERENCES discountMonth(month)
 );
