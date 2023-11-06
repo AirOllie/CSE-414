@@ -25,13 +25,13 @@ CREATE TABLE Driver (
 
 CREATE TABLE NonProfessionalDriver (
     driverSSN BIGINT PRIMARY KEY,
-    FOREIGN KEY (ssn) REFERENCES Person(ssn)
+    FOREIGN KEY (driverSSN) REFERENCES Driver(ssn)
 );
 
 CREATE TABLE ProfessionalDriver (
     driverSSN BIGINT PRIMARY KEY,
     medicalHistory VARCHAR(256),
-    FOREIGN KEY (ssn) REFERENCES Person(ssn)
+    FOREIGN KEY (driverSSN) REFERENCES Driver(ssn)
 );
 
 CREATE TABLE Vehicle (
