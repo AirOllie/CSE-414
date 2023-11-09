@@ -1,11 +1,12 @@
-DROP TABLE IF EXISTS NonProfessionalDriver;
-DROP TABLE IF EXISTS ProfessionalDriver;
+DROP TABLE IF EXISTS Drives;
 DROP TABLE IF EXISTS Car;
 DROP TABLE IF EXISTS Truck;
-DROP TABLE IF EXISTS Driver;
 DROP TABLE IF EXISTS Vehicle;
-DROP TABLE IF EXISTS InsuranceCo;
+DROP TABLE IF EXISTS NonProfessionalDriver;
+DROP TABLE IF EXISTS ProfessionalDriver;
+DROP TABLE IF EXISTS Driver;
 DROP TABLE IF EXISTS Person;
+DROP TABLE IF EXISTS InsuranceCo;
 
 CREATE TABLE InsuranceCo (
     name VARCHAR(256) PRIMARY KEY,
@@ -20,18 +21,18 @@ CREATE TABLE Person (
 CREATE TABLE Driver (
     ssn BIGINT PRIMARY KEY,
     driverID BIGINT,
-    FOREIGN KEY (ssn) REFERENCES Person(ssn)
+    FOREIGN KEY (ssn) REFERENCES Person
 );
 
 CREATE TABLE NonProfessionalDriver (
-    driverSSN BIGINT PRIMARY KEY,
-    FOREIGN KEY (driverSSN) REFERENCES Driver(ssn)
+    ssn BIGINT PRIMARY KEY,
+    FOREIGN KEY (ssn) REFERENCES Driver
 );
 
 CREATE TABLE ProfessionalDriver (
-    driverSSN BIGINT PRIMARY KEY,
+    ssn BIGINT PRIMARY KEY,
     medicalHistory VARCHAR(256),
-    FOREIGN KEY (driverSSN) REFERENCES Driver(ssn)
+    FOREIGN KEY (ssn) REFERENCES Driver
 );
 
 CREATE TABLE Vehicle (
@@ -40,20 +41,30 @@ CREATE TABLE Vehicle (
     maxLiability REAL,
     ownerSSN BIGINT,
     insuranceName VARCHAR(256),
-    FOREIGN KEY (ownerSSN) REFERENCES Person(ssn),
-    FOREIGN KEY (insuranceName) REFERENCES InsuranceCo(name)
+    FOREIGN KEY (ownerSSN) REFERENCES Person,
+    FOREIGN KEY (insuranceName) REFERENCES InsuranceCo
 );
 
 CREATE TABLE Car (
     licensePlate VARCHAR(256) PRIMARY KEY,
     make VARCHAR(256),
-    FOREIGN KEY (licensePlate) REFERENCES Vehicle(licensePlate)
+    FOREIGN KEY (licensePlate) REFERENCES Vehicle
 );
 
 CREATE TABLE Truck (
     licensePlate VARCHAR(256) PRIMARY KEY,
     capacity INT,
-    FOREIGN KEY (licensePlate) REFERENCES Vehicle(licensePlate)
+    operatorSSN BIGINT,
+    FOREIGN KEY (licensePlate) REFERENCES Vehicle,
+    FOREIGN KEY (operatorSSN) REFERENCES ProfessionalDriver
+);
+
+CREATE TABLE Drives (
+    carNo VARCHAR(256),
+    driverSSN BIGINT,
+    PRIMARY KEY (carNo, driverSSN),
+    FOREIGN KEY (carNo) REFERENCES Car,
+    FOREIGN KEY (driverSSN) REFERENCES NonProfessionalDriver
 );
 
 /*
